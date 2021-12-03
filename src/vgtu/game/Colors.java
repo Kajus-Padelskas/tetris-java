@@ -1,8 +1,8 @@
 package vgtu.game;
 
 public class Colors {
-    static final String ANSI_RESET;
-    static final String ANSI_RED;
+    private static final String ANSI_RESET;
+    private static final String ANSI_RED;
     private static final String ANSI_GREEN;
     private static final String ANSI_YELLOW;
     private static final String ANSI_PURPLE;

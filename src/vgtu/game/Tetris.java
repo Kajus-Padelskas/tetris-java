@@ -4,8 +4,7 @@ import vgtu.controllers.FileController;
 import vgtu.controllers.KeyboardController;
 
 import static java.awt.desktop.UserSessionEvent.Reason.LOCK;
-import static vgtu.game.Colors.ANSI_RED;
-import static vgtu.game.Colors.ANSI_RESET;
+import static vgtu.game.Colors.*;
 import static vgtu.game.TetrominosIndustry.generateTetromino;
 
 public class Tetris {
@@ -55,7 +54,7 @@ public class Tetris {
         } while (!isGameOver);
         if (fileController.readScore() < getCanvas().getScore().getScore())
             fileController.writeRecordToFile(getCanvas().getScore().toString());
-        System.out.printf("%sGame Over%s%n", ANSI_RED, ANSI_RESET);
+        System.out.printf("%sGame Over%s%n", getAnsiRed(), getAnsiReset());
     }
 
     public static void main(String[] args) throws Exception {
