@@ -86,11 +86,15 @@ public class Tetromino {
         for (int i = 0; i < getGlobals().getTetrominosMatrixLength(); i++)
             for (int j = 0; j < getGlobals().getTetrominosMatrixLength(); j++) {
                 if (tetrominoMatrix[i][j] == 0) continue;
-                Integer cell = getCanvas().getCanvasCell(xAxis + j, yAxis + i);
-                if (getCanvas().getHeight() > yAxis + i && cell != null && cell != 1) continue;
+                if (getCanvas().getHeight() > yAxis + i && getCell(i, j) != null && getCell(i, j) != 1) continue;
                 return false;
             }
         return true;
+    }
+
+    private Integer getCell(int i, int j) {
+        Integer cell = getCanvas().getCanvasCell(xAxis + j, yAxis + i);
+        return cell;
     }
 
     public Canvas getCanvas() {

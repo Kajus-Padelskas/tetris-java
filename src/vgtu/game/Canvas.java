@@ -108,5 +108,4 @@ public class Canvas {
     public Score getScore() {
         return score;
     }
-
 }
