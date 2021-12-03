@@ -12,12 +12,11 @@ import static vgtu.game.Tetris.tetris;
 
 public class Canvas {
 
-    Score score = Score.getInstance();
-    FileController fileController = new FileController();
-
     private final int width = 10;
     private final int height = 20;
     private final int[][] tetrominoMatrix;
+    private final FileController fileController = new FileController();
+    private final Score score = Score.getInstance();
 
     public int getWidth() {
         return width;
@@ -58,24 +57,23 @@ public class Canvas {
         int[][] tetrominoMatrix = getTetrominoMatrix();
         for (int i = 0; i < height; i++) {
             for (int j = 0; j < width; j++) {
-                int index = tetrisCanvas[i][j];
-                if (index != 0)
+                if (tetrisCanvas[i][j] != 0)
                     if (tetrominoMatrix[0][0] == 1 && tetrominoMatrix[1][0] == 1 && tetrominoMatrix[2][0] == 1 && tetrominoMatrix[2][1] == 1)
-                        System.out.printf("%s \u25A0 %s", ANSI_RED, ANSI_RESET);
+                        System.out.printf("%s \u25A0 %s", getAnsiRed(), getAnsiReset());
                     else if (tetrominoMatrix[0][0] == 1 && tetrominoMatrix[1][0] == 1 && tetrominoMatrix[1][1] == 1 && tetrominoMatrix[2][1] == 1)
-                        System.out.printf("%s \u25A0 %s", ANSI_GREEN, ANSI_RESET);
+                        System.out.printf("%s \u25A0 %s", getAnsiGreen(), getAnsiReset());
                     else if (tetrominoMatrix[0][0] == 1 && tetrominoMatrix[0][1] == 1 && tetrominoMatrix[0][2] == 1)
-                        System.out.printf("%s \u25A0 %s", ANSI_CYAN, ANSI_RESET);
+                        System.out.printf("%s \u25A0 %s", getAnsiCyan(), getAnsiReset());
                     else if (tetrominoMatrix[0][0] == 1 && tetrominoMatrix[0][1] == 1 && tetrominoMatrix[1][0] == 1 && tetrominoMatrix[1][1] == 1)
-                        System.out.printf("%s \u25A0 %s", ANSI_YELLOW, ANSI_RESET);
-                    else System.out.printf("%s \u25A0 %s", ANSI_PURPLE, ANSI_RESET);
+                        System.out.printf("%s \u25A0 %s", getAnsiYellow(), getAnsiReset());
+                    else System.out.printf("%s \u25A0 %s", getAnsiPurple(), getAnsiReset());
                 else
                     System.out.print(" \u25AB ");
             }
-            System.out.println(ANSI_RESET);
+            System.out.println(getAnsiReset());
         }
-        IntStream.range(0, 2).mapToObj(i -> ANSI_RESET).forEach(System.out::println);
-        System.out.printf("%sYour score is: %d%s%n", ANSI_GREEN, score.getScore(), ANSI_RESET).printf("%sHighest score is: %d%s", ANSI_GREEN, fileController.readScore(), ANSI_RESET);
+        IntStream.range(0, 2).mapToObj(i -> getAnsiReset()).forEach(System.out::println);
+        System.out.printf("%sYour score is: %d%s%n", getAnsiGreen(), getScore().getScore(), getAnsiReset()).printf("%sHighest score is: %d%s", getAnsiGreen(), fileController.readScore(), getAnsiReset());
         System.out.println();
     }
 
@@ -87,7 +85,7 @@ public class Canvas {
                 if (tetrominoMatrix[i][j] != 1) continue;
                 numberOfOnes++;
             }
-            if (width == numberOfOnes) score.setScore(score.getScore() + 100);
+            if (width == numberOfOnes) getScore().setScore(getScore().getScore() + 100);
             else canvasLines.add(tetrominoMatrix[i]);
         }
         while (!(canvasLines.size() >= height)) canvasLines.add(0, new int[width]);
@@ -106,4 +104,9 @@ public class Canvas {
                     tetrisField[yAxis + i][xAxis + j] = 1;
         return tetrisField;
     }
+
+    public Score getScore() {
+        return score;
+    }
+
 }

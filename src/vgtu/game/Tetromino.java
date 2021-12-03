@@ -6,9 +6,8 @@ import static vgtu.game.Tetris.tetris;
 
 public class Tetromino {
 
-    Canvas canvas = tetris.getCanvas();
-    Globals globals = new Globals();
-
+    private final Canvas canvas = tetris.getCanvas();
+    private final Globals globals = new Globals();
     private int xAxis;
     private int yAxis;
     private int[][] tetrominoMatrix;
@@ -40,14 +39,14 @@ public class Tetromino {
     }
 
     public int[][] rotateMatrix() {
-        int[][] newArr = new int[globals.getTetrominosMatrixLength()][globals.getTetrominosMatrixLength()];
+        int[][] newArr = new int[getGlobals().getTetrominosMatrixLength()][getGlobals().getTetrominosMatrixLength()];
 
         if (tetrominoMatrix[0][0] == 1 && tetrominoMatrix[0][1] == 1 && tetrominoMatrix[1][0] == 1 && tetrominoMatrix[1][1] == 1)
-            IntStream.range(0, globals.getTetrominosMatrixLength()).forEach(i -> System.arraycopy(this.tetrominoMatrix[i], 0, newArr[i], 0, globals.getTetrominosMatrixLength()));
+            IntStream.range(0, getGlobals().getTetrominosMatrixLength()).forEach(i -> System.arraycopy(this.tetrominoMatrix[i], 0, newArr[i], 0, getGlobals().getTetrominosMatrixLength()));
         else
-            for (int i = 0; i < globals.getTetrominosMatrixLength(); i++) {
+            for (int i = 0; i < getGlobals().getTetrominosMatrixLength(); i++) {
                 int k = 0;
-                for (int j = (globals.getTetrominosMatrixLength() - 1); j >= 0; j--) {
+                for (int j = (getGlobals().getTetrominosMatrixLength() - 1); j >= 0; j--) {
                     newArr[i][j] = tetrominoMatrix[k][i];
                     k++;
                 }
@@ -76,21 +75,30 @@ public class Tetromino {
     }
 
     public void landTetromino() {
-        for (int i = 0; i < globals.getTetrominosMatrixLength(); i++)
-            for (int j = 0; j < globals.getTetrominosMatrixLength(); j++) {
+        for (int i = 0; i < getGlobals().getTetrominosMatrixLength(); i++)
+            for (int j = 0; j < getGlobals().getTetrominosMatrixLength(); j++) {
                 if (tetrominoMatrix[i][j] == 0) continue;
-                canvas.setCanvasCell(xAxis + j, yAxis + i, 1);
+                getCanvas().setCanvasCell(xAxis + j, yAxis + i, 1);
             }
     }
 
     public boolean checkCurrentCellAccessibility() {
-        for (int i = 0; i < globals.getTetrominosMatrixLength(); i++)
-            for (int j = 0; j < globals.getTetrominosMatrixLength(); j++) {
+        for (int i = 0; i < getGlobals().getTetrominosMatrixLength(); i++)
+            for (int j = 0; j < getGlobals().getTetrominosMatrixLength(); j++) {
                 if (tetrominoMatrix[i][j] == 0) continue;
-                Integer cell = canvas.getCanvasCell(xAxis + j, yAxis + i);
-                if (canvas.getHeight() > yAxis + i && cell != null && cell != 1) continue;
+                Integer cell = getCanvas().getCanvasCell(xAxis + j, yAxis + i);
+                if (getCanvas().getHeight() > yAxis + i && cell != null && cell != 1) continue;
                 return false;
             }
         return true;
     }
+
+    public Canvas getCanvas() {
+        return canvas;
+    }
+
+    public Globals getGlobals() {
+        return globals;
+    }
+
 }

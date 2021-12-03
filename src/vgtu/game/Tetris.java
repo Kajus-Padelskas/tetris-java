@@ -13,7 +13,7 @@ public class Tetris {
     private final KeyboardController keyboardController = new KeyboardController();
     private final Canvas canvas = new Canvas();
     public static Tetris tetris = new Tetris();
-    public FileController fileController = new FileController();
+    private final FileController fileController = new FileController();
     private boolean isGameOver = false;
 
     public boolean isGameOver() {
@@ -33,7 +33,7 @@ public class Tetris {
     }
 
     public void generateNewFigure() {
-        tetromino = generateTetromino((int) (Math.random() * (canvas.getWidth() / 2)), 0);
+        tetromino = generateTetromino((int) (Math.random() * (getCanvas().getWidth() / 2)), 0);
     }
 
     public void startGame() throws Exception {
@@ -45,16 +45,16 @@ public class Tetris {
                 tetromino.setyAxis(tetromino.getyAxis() - 1);
                 tetromino.landTetromino();
                 isGameOver = tetromino.gameOver();
-                canvas.removeFilledLines();
+                getCanvas().removeFilledLines();
                 generateNewFigure();
             }
-            canvas.printCanvas();
+            getCanvas().printCanvas();
             synchronized (LOCK) {
                 LOCK.wait(1000);
             }
         } while (!isGameOver);
-        if (fileController.readScore() < canvas.score.getScore())
-            fileController.writeRecordToFile(canvas.score.toString());
+        if (fileController.readScore() < getCanvas().getScore().getScore())
+            fileController.writeRecordToFile(getCanvas().getScore().toString());
         System.out.printf("%sGame Over%s%n", ANSI_RED, ANSI_RESET);
     }
 
