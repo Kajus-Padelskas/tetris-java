@@ -1,12 +1,11 @@
-
 import java.util.ArrayList;
 
 public class User {
 
     private  int​ id​ ;
     private​ String firstName​;
-     private​ String lastName​;
-     private​ int age;
+    private​ String lastName​;
+    private​ int age;
     private String profession;
     private ArrayList<User> children;
 
@@ -17,7 +16,6 @@ public class User {
         this.lastName = lastName;
         this.age = age;
         this.profession = profession;
-
     }
 
     public String getChildName(User child) {
